@@ -94,52 +94,10 @@ const token =
 
     } else {
 
-    fetch(
+    window.location.href =
   API_URL +
   "?action=" +
-  (mode === "KELUAR" ? "qrkeluar" : "qrmasuk")
-)
-      .then(response => response.json())
-      .then(data => {
-
-        if (!data.success) {
-
-          content.innerHTML =
-            '<div class="error">' +
-            (data.message || "Pengesahan QR gagal.") +
-            '</div>';
-
-          return;
-        }
-
-        content.innerHTML = `
-          <div class="mode">
-            PENGESAHAN ${mode}
-          </div>
-
-          <p>QR berjaya disahkan.</p>
-
-          <div class="code">
-            ${data.bridgeCode}
-          </div>
-
-          <div class="info">
-            Kembali ke Sistem KAFA dan masukkan
-            kod 6 digit ini pada bahagian
-            <b>PENGESAHAN QR</b>.
-          </div>
-        `;
-
-      })
-      .catch(error => {
-
-        content.innerHTML =
-          '<div class="error">' +
-          'Tidak dapat menghubungi server.' +
-          '</div>';
-
-      });
-
+  (mode === "KELUAR" ? "qrkeluar" : "qrmasuk");
     }
 
   </script>
