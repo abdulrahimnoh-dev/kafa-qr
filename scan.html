@@ -75,7 +75,9 @@
           String(url.searchParams.get("mode") || "")
             .trim()
             .toUpperCase();
-
+const token =
+  String(url.searchParams.get("token") || "")
+    .trim();
         if (mode !== "KELUAR" && mode !== "MASUK") {
           document.getElementById("status").innerText =
             "❌ QR KAFA tidak sah.";
