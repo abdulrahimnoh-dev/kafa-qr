@@ -62,10 +62,11 @@
 
         const url = new URL(decodedText);
 
-       if (
-  url.hostname !== "script.google.com" ||
-  url.pathname !== "/macros/s/AKfycbzDikjwJwKU3ORh4Y-S4zQM8o_Ppq3MIHsRTm4KQej4HMSquMCzxdXXVygODiuxu7q8/exec"
+     if (
+  url.hostname !== "abdulrahimnoh-dev.github.io" ||
+  !url.pathname.startsWith("/kafa-qr/")
 ) {
+       
   document.getElementById("status").innerText =
     "❌ QR bukan daripada Sistem KAFA.";
   return;
