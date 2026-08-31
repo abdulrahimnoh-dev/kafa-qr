@@ -81,7 +81,9 @@
       String(params.get("mode") || "")
         .trim()
         .toUpperCase();
-
+const token =
+  String(params.get("token") || "")
+    .trim();
     const content =
       document.getElementById("content");
 
