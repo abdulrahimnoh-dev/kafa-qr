@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <title>Pengesahan QR KAFA</title>
 
   <style>
@@ -75,32 +76,123 @@
     const API_URL =
       "https://script.google.com/macros/s/AKfycbzDikjwJwKU3ORh4Y-S4zQM8o_Ppq3MIHsRTm4KQej4HMSquMCzxdXXVygODiuxu7q8/exec";
 
-    const params = new URLSearchParams(window.location.search);
+    const params =
+      new URLSearchParams(window.location.search);
 
     const mode =
       String(params.get("mode") || "")
         .trim()
         .toUpperCase();
-const token =
-  String(params.get("token") || "")
-    .trim();
+
+    const token =
+      String(params.get("token") || "")
+        .trim();
+
     const content =
       document.getElementById("content");
+
+
+    // ==========================
+    // SEMAK MODE
+    // ==========================
 
     if (mode !== "KELUAR" && mode !== "MASUK") {
 
       content.innerHTML =
-        '<div class="error">QR tidak sah.</div>';
+        '<div class="error">❌ QR tidak sah.</div>';
 
-    } else {
+    }
 
-  fetch(
-  API_URL +
-  "?action=createqrbridge&qrmode=" +
-  encodeURIComponent(mode) +
-  "&token=" +
-  encodeURIComponent(token)
-) 
+    // ==========================
+    // SEMAK TOKEN
+    // ==========================
+
+    else if (!token) {
+
+      content.innerHTML =
+        '<div class="error">❌ Token QR tidak dijumpai.</div>';
+
+    }
+
+    // ==========================
+    // CIPTA QR BRIDGE
+    // ==========================
+
+    else {
+
+      fetch(
+        API_URL +
+        "?action=createqrbridge&qrmode=" +
+        encodeURIComponent(mode) +
+        "&token=" +
+        encodeURIComponent(token)
+      )
+
+      .then(response => response.json())
+
+      .then(result => {
+
+        if (!result.success) {
+
+          content.innerHTML =
+            '<div class="error">' +
+            '❌ ' +
+            (result.message || "QR tidak dapat disahkan.") +
+            '</div>';
+
+          return;
+        }
+
+
+        const code =
+          result.code ||
+          result.bridgeCode ||
+          result.bridge ||
+          "";
+
+
+        if (!code) {
+
+          content.innerHTML =
+            '<div class="error">' +
+            '❌ Kod pengesahan tidak diterima.' +
+            '</div>';
+
+          return;
+        }
+
+
+        content.innerHTML = `
+          <div class="mode">
+            QR ${mode}
+          </div>
+
+          <div class="info">
+            Masukkan kod pengesahan ini dalam sistem:
+          </div>
+
+          <div class="code">
+            ${code}
+          </div>
+
+          <div class="info">
+            Kod ini hanya boleh digunakan sekali.
+          </div>
+        `;
+
+      })
+
+      .catch(error => {
+
+        console.error(error);
+
+        content.innerHTML =
+          '<div class="error">' +
+          '❌ Tidak dapat menghubungi sistem. Sila cuba semula.' +
+          '</div>';
+
+      });
+
     }
 
   </script>
