@@ -91,9 +91,11 @@ const token =
 
         html5QrCode.stop().then(() => {
 
-          window.location.href =
-            "index.html?mode=" + encodeURIComponent(mode);
-
+         window.location.href =
+  "index.html?mode=" +
+  encodeURIComponent(mode) +
+  "&token=" +
+  encodeURIComponent(token);
         });
 
       } catch (e) {
