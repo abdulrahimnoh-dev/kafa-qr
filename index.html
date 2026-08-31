@@ -94,10 +94,13 @@ const token =
 
     } else {
 
-    window.location.href =
+  fetch(
   API_URL +
-  "?action=" +
-  (mode === "KELUAR" ? "qrkeluar" : "qrmasuk");
+  "?action=createqrbridge&qrmode=" +
+  encodeURIComponent(mode) +
+  "&token=" +
+  encodeURIComponent(token)
+) 
     }
 
   </script>
