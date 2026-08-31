@@ -94,12 +94,10 @@ const token =
 
     } else {
 
-     fetch(
+    fetch(
   API_URL +
-  "?action=createqrbridge&qrmode=" +
-  encodeURIComponent(mode) +
-  "&token=" +
-  encodeURIComponent(token)
+  "?action=" +
+  (mode === "KELUAR" ? "qrkeluar" : "qrmasuk")
 )
       .then(response => response.json())
       .then(data => {
